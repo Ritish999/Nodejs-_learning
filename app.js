@@ -33,3 +33,21 @@ shyam.get("/about",(req,res)=>{
 shyam.listen(4000,()=>{
     console.log(" harey ram harey shyam ")
 })
+
+
+
+
+
+
+// day 6 ko code 
+const express=require('express')
+const app=express()
+
+app.get('/',(req,res)=>{
+    res.status(200).json({
+        Hello:"this is the status code"
+    })
+})
+app.listen(4999,()=>{
+    console.log("for the status code")
+})
