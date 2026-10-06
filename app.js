@@ -65,3 +65,18 @@ appl.get('/',(req,res)=>{
 appl.listen(4909,()=>{
     console.log("for the status code")
 })
+
+
+
+//day 6
+const expre=require('express')
+const appp=expre()
+
+appp.get('/',(req,res)=>{
+    res.status(200).json({
+        Hello:"this is the status code"
+    })
+})
+appp.listen(4909,()=>{
+    console.log("for the status code")
+})
