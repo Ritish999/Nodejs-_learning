@@ -82,10 +82,15 @@
 // })
 
 
+
+
 // Day 7 where we connect data base 
 // yo tala ko code ma connect gareko xa RAMRO sanga heara 
 
 // mongodb+srv://ritishsinkemana7_db_user:<db_password>@cluster0.z0vo1q6.mongodb.net/?appName=Cluster0
+
+
+require('dotenv').config()
 
 const siri=require('express')
 const so=siri()
@@ -99,6 +104,9 @@ so.get('/',(req,res)=>{
         Hello:"this is the status code"
     })
 })
-so.listen(4900,()=>{
-    console.log("for the status riits")
+so.listen(process.env.port,()=>{
+    console.log("for the status ritis")
 })
+
+
+// test 1;
