@@ -95,6 +95,13 @@ require('dotenv').config()
 const siri=require('express')
 const so=siri()
 
+// imp code yo tala ko rakhnu parxa
+// app.use(express.json())
+so.use(siri.json())
+
+
+
+
 const connectToDatabase= require('./database')
 connectToDatabase()
 
@@ -104,6 +111,14 @@ so.get('/',(req,res)=>{
         Hello:"this is the status code"
     })
 })
+
+so.post('/blog',(req,res)=>{
+    console.log(req.body) // lock hunca
+    res.json({
+        message:"blog api hit sucessfully"
+    })
+})
+
 so.listen(process.env.port,()=>{
     console.log("for the status ritis")
 })
