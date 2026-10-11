@@ -103,6 +103,7 @@ so.use(siri.json())
 
 
 const connectToDatabase= require('./database')
+const Blog = require('./model/blogModel')
 connectToDatabase()
 
 
@@ -112,8 +113,25 @@ so.get('/',(req,res)=>{
     })
 })
 
-so.post('/blog',(req,res)=>{
-    console.log(req.body) // lock hunca
+so.post('/blog',async(req,res)=>{
+    //  console.log(req.body) // lock hunca
+
+    // const title=req.body.title;
+    // const description=req.body.description;
+    // const subtitle=req.body.subtitle;
+
+    // mathi ko ra yo same ho
+    const {title,description,subtitle}=req.body;
+    console.log(title,description);
+
+     await Blog.create({
+
+        title : title,
+        subtitle: subtitle,
+        description :description
+    })
+
+
     res.json({
         message:"blog api hit sucessfully"
     })
