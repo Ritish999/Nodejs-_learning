@@ -122,6 +122,13 @@ so.post('/blog',async(req,res)=>{
 
     // mathi ko ra yo same ho
     const {title,description,subtitle}=req.body;
+
+    // condition for entering all required data
+    if(!title || !subtitle || !description){
+        res.status(490).json({
+            message: "Mampakha sabai data rakh khurka "
+        })
+    }
     console.log(title,description);
 
      await Blog.create({
