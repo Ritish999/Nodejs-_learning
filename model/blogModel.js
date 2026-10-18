@@ -34,7 +34,8 @@ const Schema = mongoose.Schema;
 const blogSchema = new Schema({
   title: {
     type: String,
-    unique: true,
+    // unique: true,
+    // mathi ko unique le chai  primary key ko kaam garca
   },
   subtitle: {
     type: String,
