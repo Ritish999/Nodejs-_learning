@@ -52,4 +52,5 @@ const blogSchema = new Schema({
 const Blog = mongoose.model("Blog", blogSchema); //method
 // mongoose.mehod --- properties hunca bracket xaina vane
 
+//export gareko
 module.exports = Blog;
