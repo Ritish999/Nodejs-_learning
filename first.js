@@ -163,3 +163,69 @@
 // malka complex to read
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+require('dotenv').config() // Loads environment variables from the .env file
+
+const express = require('express') // Imports Express
+const app = express() // Creates an Express application
+
+const connectToDatabase = require('./database') // Imports the database connection function
+const Blog = require('./model/blogModel') // Imports the Blog model to work with MongoDB
+
+app.use(express.json()) // Allows Express to read JSON data sent in the request body
+
+connectToDatabase() // Connects the application to MongoDB
+
+// GET API: Runs when someone visits the home route (/)
+app.get('/', (req, res) => {
+    res.status(200).json({
+        message: "Hello out there, this is Ritis!"
+    }) // Sends a success response with a message
+})
+
+// POST API: Runs when someone sends a POST request to /blog
+app.post('/blog', async (req, res) => {
+
+    // Extracts title, description, and subtitle from the request body
+    const { title, description, subtitle } = req.body
+
+    // Checks whether all required fields have been provided
+    if (!title || !subtitle || !description) {
+        return res.status(400).json({
+            message: "Mampakha sabai data rakh khurka"
+        }) // Sends an error response and stops the route
+    }
+
+    // Prints the title and description in the terminal
+    console.log(title, description)
+
+    // Creates a new blog document and saves it in MongoDB
+    await Blog.create({
+        title: title,
+        subtitle: subtitle,
+        description: description
+    })
+
+    // Sends a response after the blog has been saved successfully
+    res.json({
+        message: "blog api hit sucessfully"
+    })
+})
+
+// Starts the server and listens on the port specified in .env
+app.listen(process.env.port, () => {
+    console.log("for the status ritis") // Prints a message when the server starts
+})
