@@ -1,54 +1,59 @@
+require('dotenv').config()
 
-require('dotenv').config();
+const express = require('express')
+const app = express()
 
-const express = require('express');
-const app = express();
+const connectToDatabase = require('./database')
+const Blog = require('./model/blogModel')
 
-const connectToDatabase = require('./database');
-const Blog = require('./model/blogModel');
+app.use(express.json())
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// import gareko kina vane uta bata exort haneko thiyo
+const {multer,storage}=require('./middleware/multerConfig')
+const upload =multer({storage : storage})// use storage paxadi because multer ko const ma storgae vaneko variable banayeko xa aani sabai tesma store vayeko xa
 
-// Connect to database
-connectToDatabase();
+
+connectToDatabase()
 
 // GET API
 app.get('/', (req, res) => {
     res.status(200).json({
-        message: 'Hello out there, this is Ritis!'
-    });
-});
+        message: "Hello out there, this is Ritis!"
+    })
+})
 
 // POST API
-app.post('/blog', async (req, res) => {
-    console.log('Request body:', req.body);
+app.post('/blog', upload.single('image'),async (req, res) => {
 
-    const { title, subtitle, description } = req.body || {};
+    // Getting data from request body
+    const { title, description, subtitle  } = req.body
+    const image = req.file
 
-    // Validate request data
-    if (!title || !subtitle || !description) {
+    // Checking required data
+    if (!title || !subtitle || !description || !image) {
         return res.status(400).json({
-            message: 'Please provide title, subtitle, and description.'
-        });
+            message: "Mampakha sabai data rakh khurka"
+        })
     }
 
-    const blog = await Blog.create({
-        title,
-        subtitle,
-        description
-    });
+    // Printing data in terminal
+    console.log(title, description, subtitle )
 
-    res.status(201).json({
-        message: 'Blog created successfully',
-        blog
-    });
-});
+    // Creating blog in database
+    await Blog.create({
+        title: title,
+        subtitle: subtitle,
+        description: description,
+        image: image.filename   // so mathi const image  lekheko karan yeta image.file vayeko
+    })
 
-// Start server
-const PORT = process.env.PORT || 3000;
+    // Sending response
+    res.json({
+        message: "blog api hit sucessfully"
+    })
+})
 
-app.listen(PORT, () => {
-    console.log('Server is running on port ' + PORT);
-});
+// Starting the server
+app.listen(process.env.port, () => {
+    console.log("for the status ritis")
+})
