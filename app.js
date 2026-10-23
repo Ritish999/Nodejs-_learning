@@ -29,6 +29,10 @@ app.post('/blog', upload.single('image'),async (req, res) => {
     const { title, description, subtitle  } = req.body
     const image = req.file
 
+    // today code
+    // console.log(req.body)
+    console.log(req.file)
+
     // Checking required data
     if (!title || !subtitle || !description || !image) {
         return res.status(400).json({
@@ -52,6 +56,18 @@ app.post('/blog', upload.single('image'),async (req, res) => {
         message: "blog api hit sucessfully"
     })
 })
+
+
+app.get("/blog",async(req,res)=>{
+    const differentName =await Blog.find({})
+    res.status(200).json({
+        message : "blogs fetched sucessfully ",
+        data : differentName
+    })
+})
+
+//folder ko image chrome ma hearne vaye yo rakhbe 
+app.use(express.static('./storage'))
 
 // Starting the server
 app.listen(process.env.port, () => {
