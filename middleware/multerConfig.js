@@ -9,7 +9,7 @@ const multer=require('multer')
     },
     filename: function(req,file,cb){
         //cb(null,file.originalname)
-        cb(null,"riits"+file.originalname)
+         cb(null,Date.now()+ "-" + file.originalname)
     }
 })
 
