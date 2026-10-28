@@ -57,6 +57,40 @@ app.post('/blog', upload.single('image'),async (req, res) => {
     })
 })
 
+app.get("/blog/:id", async(req, res) => {
+    // id ko thau ma j rakhda pani hunca
+    // console.log(req.params.id);
+    const id=req.params.id
+     const blog = await Blog.findById(id)// single data xas vane object ma dinxa
+
+     if(!blog){
+        res.status(404).json({
+            message:"no data found"
+        })
+     }
+     else{
+        res.status(200).json({
+            message:"Fetched data",
+            data : blog
+        })
+     }
+});
+
+
+//delete garna ko lagi
+app.delete("/blog/:id",async(req,res)=>{
+   const del=req.params.id
+   await Blog.findByIdAndDelete(del)
+   res.status(200).json({
+    message:"blog deleted sucessfully"
+   })
+})
+
+//update
+app.patch("blog/:id",(req,res)=>{
+
+})
+
 
 app.get("/blog",async(req,res)=>{
     const differentName =await Blog.find({})
@@ -73,3 +107,5 @@ app.use(express.static('./storage'))
 app.listen(process.env.port, () => {
     console.log("for the status ritis")
 })
+
+

@@ -122,7 +122,7 @@
 //     })
 // })
 
-// so.post('/blog',async(req,res)=>{
+// so.post('/blog',async(req,res)=>{vs
 //     //  console.log(req.body) // lock hunca
 
 //     // const title=req.body.title;
