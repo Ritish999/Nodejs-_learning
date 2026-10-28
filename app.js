@@ -98,7 +98,19 @@ app.delete("/blog/:id",async(req,res)=>{
 })
 
 //update
-app.patch("blog/:id",(req,res)=>{
+app.patch("/blog/:id",async(req,res)=>{
+    const id=req.params.id
+    const{title,subtitle,description}=req.body
+    await Blog.findByIdAndUpdate(id,{
+        title :title,
+        subtitle : subtitle,
+        description : description
+        //left side ko column and right side ko value
+    })
+    res.status(200).json({
+        message : "updated sucessfully"
+    })
+
 
 })
 
