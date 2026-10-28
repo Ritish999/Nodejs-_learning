@@ -11,7 +11,7 @@ app.use(express.json())
 // import gareko kina vane uta bata exort haneko thiyo
 const {multer,storage}=require('./middleware/multerConfig')
 const upload =multer({storage : storage})// use storage paxadi because multer ko const ma storgae vaneko variable banayeko xa aani sabai tesma store vayeko xa
-
+const fs=require('fs')//this is for deletetation and to delete from folder 
 
 connectToDatabase()
 
@@ -80,6 +80,17 @@ app.get("/blog/:id", async(req, res) => {
 //delete garna ko lagi
 app.delete("/blog/:id",async(req,res)=>{
    const del=req.params.id
+   const blog= await Blog.findById(del)
+   const imageName=blog.image
+   
+   fs.unlink(`storage/${imageName}`,(err)=>{
+    if(err){
+        console.log(err)
+    }
+    else{
+        console.log("file deleted sucessfully")
+    }
+   })
    await Blog.findByIdAndDelete(del)
    res.status(200).json({
     message:"blog deleted sucessfully"
