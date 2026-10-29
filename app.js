@@ -29,8 +29,8 @@ app.post("/blog", upload.single("image"), async (req, res) => {
   const image = req.file;
 
   // today code
-  // console.log(req.body)
-  console.log(req.file);
+   console.log(req.body)
+   console.log(req.file);
 
   // Checking required data
   if (!title || !subtitle || !description || !image) {
